@@ -1,0 +1,24 @@
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Emacs
+        uses: purcell/setup-emacs@master
+        with:
+          version: "31.1"
+
+      - name: make verify
+        run: make verify
+
+      - name: check autoloads fresh
+        run: make check-autoloads
